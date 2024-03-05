@@ -1,0 +1,36 @@
+Exercice Book
+
+1.  db.employees.find()
+2.  db.employees.find({ age: { $gt: 33 } })
+3.  db.employees.find().sort({ salary: -1 })
+4.  db.employees.find({}, { _id: 0, name: 1, job: 1 })
+5.  db.employees.aggregate([  { $group: { _id: "$job", totalEmployees: { $sum: 1 } } }])
+6. db.employees.updateMany({ job: "Developer" }, { $set: { salary: 80000 } }
+
+EXERCICE EXO
+
+1.  db.salles.find(  { smac: true }, { _id: 1, nom: 1 })
+2. db.salles.find({ capacite: { $gt: 1000 } },  { _id: 0, nom: 1 })
+3. db.salles.find({ "adresse.numero": { $exists: false } },  { _id: 1 })
+4. db.salles.find({ avis: { $size: 1 } }, { _id: 1, nom: 1 })
+5. db.salles.find(  { avis: { $size: 1 } },  { _id: 1, nom: 1 })
+6. db.salles.find(  { styles: "blues" },  { _id: 0, styles: 1 })
+7. db.salles.find(  { $expr: { $eq: [{ $arrayElemAt: ["$styles", 0] }, "blues"] } },  { _id: 0, styles: 1 })
+8. db.salles.find(  { "adresse.codePostal": /^84/,    capacite: { $lt: 500 }  },  { _id: 0, "adresse.ville": 1 })
+9. db.salles.find(  { "avis.note": { $gte: 8, $lte: 10 } },  { _id: 0, nom: 1 })
+10. db.salles.find(  { "avis.date": { $gt: new Date("2019-11-15") } },  { _id: 0, nom: 1 })
+11. db.salles.find(  { $expr: { $gt: [{ $multiply: ["$_id", 100] }, "$capacite"] } },  { _id: 0, nom: 1, capacite: 1 })
+12. db.salles.find({  smac: true,  $where: "this.styles.length > 2"},{ _id: 0, nom: 1 })
+13. db.salles.distinct("adresse.codePostal")
+14. db.salles.updateMany({}, { $inc: { capacite: 100 } })
+15. db.salles.updateMany({ styles: { $exists: false } }, { $set: { styles: ["jazz"] } })
+16. db.salles.updateMany(  { _id: { $nin: [2, 3] } },  { $pull: { styles: "funk" } })
+17. db.salles.updateOne(  { _id: 3 },  { $addToSet: { styles: { $each: ["techno", "reggae"] } } })
+18. db.salles.updateMany(  { nom: { $regex: /^P/i } },  { $inc: { capacite: 150 }, $set: { contact: { telephone: "04 11 94 00 10" } } })
+19. db.salles.updateMany(  { nom: { $regex: /^[aeiou]/i } },  { $push: { avis: { date: new Date(), note: 10 } } })
+20. db.salles.updateMany(  { nom: { $regex: /^[zZ]/ } },  { $set: { nom: "Pub Z", capacite: 50, smac: false } },  { upsert: true })
+21. db.salles.find({ _id: { $type: "objectId" } }).count()
+22. db.salles.find({ _id: { $not: { $type: "objectId" } } })  .sort({ capacite: -1 })  .limit(1)
+23. db.salles.replaceOne(  { nom: "Pub Z" },  { nom: "Pub Z", capacite: 60 })
+24. db.salles.deleteOne({  _id: { $type: "objectId" },  capacite: { $lte: 60 }})
+25. db.salles.findOneAndUpdate(  { "adresse.ville": "Nîmes" },  { $inc: { capacite: -15 } },  { returnDocument: "after" })
